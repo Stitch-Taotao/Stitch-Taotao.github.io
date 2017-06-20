@@ -1,0 +1,781 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="UIKit," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="桑尼号&好尼桑" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言在iOS 5以前，我们想去自定义系统控件的外观是一件麻烦的事。如果想统一地改变系统控件的外观，我们可能会想各种办法，如去继承现有的控件类，并在子类中修改，或者甚至于动用method swizzling这样高大上的方法。不过，苹果在iOS 5之后为我们提供了一种新的方法：UIAppearance，让这些事简单了不少。 UIApearance的作用UIApearance是一个协议，我们可以用它来获">
+<meta name="keywords" content="UIKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UIApearance">
+<meta property="og:url" content="http://sangnihao.com/2017/05/28/UIApearance/index.html">
+<meta property="og:site_name" content="桑尼号&amp;好尼桑">
+<meta property="og:description" content="前言在iOS 5以前，我们想去自定义系统控件的外观是一件麻烦的事。如果想统一地改变系统控件的外观，我们可能会想各种办法，如去继承现有的控件类，并在子类中修改，或者甚至于动用method swizzling这样高大上的方法。不过，苹果在iOS 5之后为我们提供了一种新的方法：UIAppearance，让这些事简单了不少。 UIApearance的作用UIApearance是一个协议，我们可以用它来获">
+<meta property="og:updated_time" content="2017-06-19T16:55:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UIApearance">
+<meta name="twitter:description" content="前言在iOS 5以前，我们想去自定义系统控件的外观是一件麻烦的事。如果想统一地改变系统控件的外观，我们可能会想各种办法，如去继承现有的控件类，并在子类中修改，或者甚至于动用method swizzling这样高大上的方法。不过，苹果在iOS 5之后为我们提供了一种新的方法：UIAppearance，让这些事简单了不少。 UIApearance的作用UIApearance是一个协议，我们可以用它来获">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://sangnihao.com/2017/05/28/UIApearance/"/>
+
+
+
+
+
+  <title>UIApearance | 桑尼号&好尼桑</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">桑尼号&好尼桑</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">海贼王？唔里洼那鲁！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://sangnihao.com/2017/05/28/UIApearance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="涛涛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="桑尼号&好尼桑">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UIApearance</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-28T20:31:59+08:00">
+                2017-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UIKit/" itemprop="url" rel="index">
+                    <span itemprop="name">UIKit</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UIKit/UIApearance/" itemprop="url" rel="index">
+                    <span itemprop="name">UIApearance</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在iOS 5以前，我们想去自定义系统控件的外观是一件麻烦的事。如果想统一地改变系统控件的外观，我们可能会想各种办法，如去继承现有的控件类，并在子类中修改，或者甚至于动用method swizzling这样高大上的方法。不过，苹果在iOS 5之后为我们提供了一种新的方法：UIAppearance，让这些事简单了不少。</p>
+<h3 id="UIApearance的作用"><a href="#UIApearance的作用" class="headerlink" title="UIApearance的作用"></a>UIApearance的作用</h3><p>UIApearance是一个协议，我们可以用它来获取一个类的外观代理(appearance proxy)。有些非视图对象(如UIBarButtonItem)也可以实现这个协议，来定义其所包含的视图对象的外观。我们可以给这个类的外观代理发送一个修改消息，来自定义一个类的实例的外观。</p>
+<p>以系统定义的控件UIButton为例，可以通过UIAppearance修改整个应用程序中所有UIButton的外观，也可以修改某一特定容器类中所有UIButton的外观(如UIBarButtonItem)。</p>
+<p>不过需要注意的是，这种修改只会影响到那些执行UIAppearance操作之后添加到我们的视图层级架构中的视图或控件，而不会影响到修改之前就已经添加的对象。因此，如果要修改特定的视图，<strong>先确保该视图在使用UIAppearance后才通过addSubview添加到视图层级架构中</strong>。</p>
+<h3 id="UIApearance的使用"><a href="#UIApearance的使用" class="headerlink" title="UIApearance的使用"></a>UIApearance的使用</h3><h4 id="1-针对某一个类的所有实例"><a href="#1-针对某一个类的所有实例" class="headerlink" title="1. 针对某一个类的所有实例"></a>1. 针对某一个类的所有实例</h4><p>例如，如果我们想修改UINavigationBar的所有实例的背影颜色和标题外观，则可以如下实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">UINavigationBar.appearance().barTintColor = UIColor(red: 104.0/255.0, green: 224.0/255.0, blue: 231.0/255.0, alpha: 1.0)</div><div class="line"> </div><div class="line">UINavigationBar.appearance().titleTextAttributes = [</div><div class="line">    NSFontAttributeName: UIFont.systemFontOfSize(15.0),</div><div class="line">    NSForegroundColorAttributeName: UIColor.whiteColor()</div><div class="line">]</div></pre></td></tr></table></figure>
+<h4 id="2-指定一类容器，容器中所有该类的实例的外观。"><a href="#2-指定一类容器，容器中所有该类的实例的外观。" class="headerlink" title="2. 指定一类容器，容器中所有该类的实例的外观。"></a>2. 指定一类容器，容器中所有该类的实例的外观。</h4><p>例如，我们想修改导航栏中所有的按钮的外面，则可以如下处理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]</div><div class="line">   setBackgroundImage:myNavBarButtonBackgroundImage forState:state barMetrics:metrics];</div><div class="line"> </div><div class="line">[[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], [UIPopoverController class], nil]</div><div class="line">    setBackgroundImage:myPopoverNavBarButtonBackgroundImage forState:state barMetrics:metrics];</div><div class="line"> </div><div class="line">[[UIBarButtonItem appearanceWhenContainedIn:[UIToolbar class], nil]</div><div class="line">    setBackgroundImage:myToolbarButtonBackgroundImage forState:state barMetrics:metrics];</div><div class="line"> </div><div class="line">[[UIBarButtonItem appearanceWhenContainedIn:[UIToolbar class], [UIPopoverController class], nil]</div><div class="line">    setBackgroundImage:myPopoverToolbarButtonBackgroundImage forState:state barMetrics:metrics];</div></pre></td></tr></table></figure>
+<p>注意这个方法的参数是一个可变参数,因此可以同时设置多个容器。</p>
+<h3 id="关于支持UIAppearance的组件"><a href="#关于支持UIAppearance的组件" class="headerlink" title="关于支持UIAppearance的组件"></a>关于支持UIAppearance的组件</h3><p>Mattt Thompson在<a href="http://nshipster.com/uiappearance/" target="_blank" rel="external">UIApearance</a>中，给我们提供了以下两行脚本代码，可以获取所有支持<code>UI_APPEARANCE_SELECTOR</code>的方法(我们将在下面介绍<code>UI_APPEARANCE_SELECTOR)</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS*.sdk/System/Library/Frameworks/UIKit.framework/Headers</div><div class="line"> </div><div class="line">$ grep -H UI_APPEARANCE_SELECTOR ./* | sed &apos;s/ __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_5_0) UI_APPEARANCE_SELECTOR;//&apos;</div></pre></td></tr></table></figure>
+<p><a href="https://gist.github.com/mattt/5135521" target="_blank" rel="external">这里可以查看iOS7下支持<code>UI_APPEARANCE_SELECTOR)</code>的清单</a></p>
+<h3 id="自定义类实现UIAppearance"><a href="#自定义类实现UIAppearance" class="headerlink" title="自定义类实现UIAppearance"></a>自定义类实现UIAppearance</h3><ol>
+<li>让我们的类实现UIAppearanceContainer协议 （？？？这个应该是作为容器才需要吧）</li>
+<li>如果是在Objective-C中，则将相关的方法用UI_APPEARANCE_SELECTOR来标记。而在Swift中，需要在对应的属性或方法前面加上dynamic。</li>
+<li>当然，要让我们的类可以使用appearance(或appearanceWhenContainedInInstancesOfClasses)来获取自己的类，则还需要实现UIAppearance协议。</li>
+</ol>
+<p>👇<a href="http://www.cocoachina.com/ios/20150723/12671.html" target="_blank" rel="external">这个链接</a>中会有例子，来实现一个可以全局改变的RoundLabel</p>
+<h3 id="对于-UIAppearanceContainer协议"><a href="#对于-UIAppearanceContainer协议" class="headerlink" title="对于 UIAppearanceContainer协议"></a>对于 UIAppearanceContainer协议</h3><p>在UIAppearanceContainer的官方文档中，有对支持UIAppearance的方法作格式限制，具体要求如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// Swift</div><div class="line">func propertyForAxis1(axis1: IntegerType, axis2: IntegerType, axisN: IntegerType) -&gt; PropertyType</div><div class="line">func setProperty(property: PropertyType, forAxis1 axis1: IntegerType, axis2: IntegerType)</div><div class="line"> </div><div class="line">// OBJECTIVE-C</div><div class="line">- (PropertyType)propertyForAxis1:(IntegerType)axis1 axis2:(IntegerType)axis2 … axisN:(IntegerType)axisN;</div><div class="line">- (void)setProperty:(PropertyType)property forAxis1:(IntegerType)axis1 axis2:(IntegerType)axis2 … axisN:(IntegerType)axisN;</div></pre></td></tr></table></figure>
+<p>其中的属性类型可以是iOS的任意类型，包括id, NSInteger, NSUInteger, CGFloat, CGPoint, CGSize, CGRect, UIEdgeInsets或UIOffset。而IntegerType必须是NSInteger或者NSUInteger。如果类型不对，则会抛出异常。</p>
+<p>我们可以以<code>UIBarButtonItem</code>为例，它定义了以下方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">setTitlePositionAdjustment:forBarMetrics:</div><div class="line"> </div><div class="line">backButtonBackgroundImageForState:barMetrics:</div><div class="line"> </div><div class="line">setBackButtonBackgroundImage:forState:barMetrics:</div></pre></td></tr></table></figure>
+<p>此处疑问？？？：怎么个遵守法呢？没明白。</p>
+<h3 id="UIAppearance-中关于Trait-Collection"><a href="#UIAppearance-中关于Trait-Collection" class="headerlink" title="UIAppearance 中关于Trait Collection"></a>UIAppearance 中关于Trait Collection</h3><p>在iOS8后，新添加的API：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// Swift</div><div class="line">static func appearanceForTraitCollection(_ trait: UITraitCollection) -&gt; Self</div><div class="line"> </div><div class="line">// Objective-C</div><div class="line">+ (instancetype)appearanceForTraitCollection:(UITraitCollection *)trait</div><div class="line"> </div><div class="line">+ (instancetype)appearanceForTraitCollection:(UITraitCollection *)trait</div><div class="line">                         whenContainedIn:(Class&lt;uiappearancecontainer&gt;)ContainerClass, ...&lt;/uiappearancecontainer&gt;</div></pre></td></tr></table></figure>
+<p>这两个方法涉及到Trait Collection.</p>
+<h3 id="深入分析UIApearance-的运作原理："><a href="#深入分析UIApearance-的运作原理：" class="headerlink" title="深入分析UIApearance 的运作原理："></a>深入分析UIApearance 的运作原理：</h3><p>具体查看<a href="http://www.cocoachina.com/ios/20150723/12671.html" target="_blank" rel="external">这里的分析</a></p>
+<h3 id="作者遗留的问题："><a href="#作者遗留的问题：" class="headerlink" title="作者遗留的问题："></a>作者遗留的问题：</h3><ol>
+<li>在swift中如何正确地使用appearanceWhenContainedInInstancesOfClasses方法？我在stackoverflow中没有找到答案。</li>
+<li>iOS内部是如何用UIAppearance设置的信息来在运行时替换默认的设置的？</li>
+</ol>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>使用UIAppearance，可以让我们方便地去修改一些视图或控件的默认显示。如果我们打算开发一个视图库，也可能会用到相关的内容。我们可以在库的内部自定义一些UIAppearance的规则来代替手动去修改视图外观。这样，库外部就可以方便的通过UIAppearance来整体修改一个类中视图的外观了。</p>
+<p>github中关于这样的开源库：<a href="https://github.com/robertwijas/UISS" target="_blank" rel="external">UISS</a>,可以研究一下。</p>
+<p>参考：<a href="http://www.cocoachina.com/ios/20150723/12671.html" target="_blank" rel="external">自定义系统控件的外观：UIApearance</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_9693f61a0101f1rs.html" target="_blank" rel="external">iOS UIAppearance使用详解</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UIKit/" rel="tag"># UIKit</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/27/UIImageAsset/" rel="next" title="UIImageAsset">
+                <i class="fa fa-chevron-left"></i> UIImageAsset
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/29/一些UIKit下的枚举/" rel="prev" title="一些UIKit下的枚举">
+                一些UIKit下的枚举 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="涛涛" />
+          <p class="site-author-name" itemprop="name">涛涛</p>
+           
+              <p class="site-description motion-element" itemprop="description">嘿嘿，我的小窝</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIApearance的作用"><span class="nav-number">2.</span> <span class="nav-text">UIApearance的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIApearance的使用"><span class="nav-number">3.</span> <span class="nav-text">UIApearance的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-针对某一个类的所有实例"><span class="nav-number">3.1.</span> <span class="nav-text">1. 针对某一个类的所有实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-指定一类容器，容器中所有该类的实例的外观。"><span class="nav-number">3.2.</span> <span class="nav-text">2. 指定一类容器，容器中所有该类的实例的外观。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于支持UIAppearance的组件"><span class="nav-number">4.</span> <span class="nav-text">关于支持UIAppearance的组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义类实现UIAppearance"><span class="nav-number">5.</span> <span class="nav-text">自定义类实现UIAppearance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对于-UIAppearanceContainer协议"><span class="nav-number">6.</span> <span class="nav-text">对于 UIAppearanceContainer协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIAppearance-中关于Trait-Collection"><span class="nav-number">7.</span> <span class="nav-text">UIAppearance 中关于Trait Collection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深入分析UIApearance-的运作原理："><span class="nav-number">8.</span> <span class="nav-text">深入分析UIApearance 的运作原理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作者遗留的问题："><span class="nav-number">9.</span> <span class="nav-text">作者遗留的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">10.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017.5.10 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">涛涛</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
