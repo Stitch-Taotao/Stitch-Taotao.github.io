@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sangnihao.com/"/>
-  <updated>2017-06-20T18:13:39.000Z</updated>
+  <updated>2017-08-19T20:01:04.000Z</updated>
   <id>http://sangnihao.com/</id>
   
   <author>
@@ -14,6 +14,77 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>整理sqlite知识</title>
+    <link href="http://sangnihao.com/2017/08/20/%E6%95%B4%E7%90%86sqlite%E7%9F%A5%E8%AF%86/"/>
+    <id>http://sangnihao.com/2017/08/20/整理sqlite知识/</id>
+    <published>2017-08-19T19:21:01.000Z</published>
+    <updated>2017-08-19T20:01:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="sqlite有用的链接"><a href="#sqlite有用的链接" class="headerlink" title="sqlite有用的链接"></a>sqlite有用的链接</h3><ul>
+<li><a href="http://www.runoob.com/sqlite/sqlite-data-types.html" target="_blank" rel="external">菜鸟教程</a></li>
+<li><a href="https://sqliteonline.com/" target="_blank" rel="external">sqliteonline在线调试</a></li>
+<li><a href="http://www.cnblogs.com/CSharpLover/p/5193698.html" target="_blank" rel="external">关于Type Affinity类型的理解</a></li>
+</ul>
+<h3 id="值得注意的细节"><a href="#值得注意的细节" class="headerlink" title="值得注意的细节"></a>值得注意的细节</h3><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">sqlite_master 表格</div><div class="line">	主表中保存数据库表的关键信息，并把它命名为 sqlite_master。如要查看表概要，可按如下操作：</div><div class="line">sqlite&gt;.schema sqlite_master</div><div class="line">这将产生如下结果：</div><div class="line">CREATE TABLE sqlite_master (</div><div class="line">  type text,</div><div class="line">  name text,</div><div class="line">  tbl_name text,</div><div class="line">  rootpage integer,</div><div class="line">  sql text</div><div class="line">);</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="疑问？"><a href="#疑问？" class="headerlink" title="疑问？"></a>疑问？</h3><ol>
+<li>什么是主数据库，什么是附加数据库？且测试时语法错误？<ul>
+<li>数据库名称 main 和 temp 被保留用于主数据库和存储临时表及其他临时数据对象的数据库。这两个数据库名称可用于每个数据库连接，且不应该被用于附加</li>
+</ul>
+</li>
+<li>怎么单独打开数据库，操作之前生成的.db文件呢？</li>
+<li></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;sqlite有用的链接&quot;&gt;&lt;a href=&quot;#sqlite有用的链接&quot; class=&quot;headerlink&quot; title=&quot;sqlite有用的链接&quot;&gt;&lt;/a&gt;sqlite有用的链接&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.runoob.c
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>最近学习一</title>
+    <link href="http://sangnihao.com/2017/06/25/%E6%9C%80%E8%BF%91%E5%AD%A6%E4%B9%A0%E4%B8%80/"/>
+    <id>http://sangnihao.com/2017/06/25/最近学习一/</id>
+    <published>2017-06-25T14:38:57.000Z</published>
+    <updated>2017-06-26T01:16:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="关于-IBInspectable-和-IBDesignable"><a href="#关于-IBInspectable-和-IBDesignable" class="headerlink" title="关于 IBInspectable 和 IBDesignable"></a>关于 IBInspectable 和 IBDesignable</h2><p><a href="http://nshipster.cn/ibinspectable-ibdesignable/" target="_blank" rel="external">IBInspectable / IBDesignable</a></p>
+<ol>
+<li><code>IBInspectable</code>、<code>IB_DESIGNABLE</code> 标记 OC ；<code>@IBInspectable</code> 、<code>@IBDesignable</code> 标记Swift。</li>
+<li>任何问题都是可避开编译和运行整个程序来调试的。调试的方法很简单，只需在你的代码中设置一个断点，在 Interface Builder 中选择视图，并选择 Editor ➔ Debug Selected Views。</li>
+<li><p>由于在 Interface Builder 中呈现自定义视图不会有应用程序的完整上下文，你可能需要生成模拟数据以便显示，例如一个默认用户头像图片或仿制的天气数据。有两种方法可以为这个特殊的上下文添加代码：</p>
+<ul>
+<li>prepareForInterfaceBuilder()：此方法与你代码的其余部分一起编译，但只有当视图正在准备在 Interface Builder 显示时执行。</li>
+<li><p>TARGET_INTERFACE_BUILDER：#if TARGET_INTERFACE_BUILDER 预处理宏在 Objective-C 或 Swift 下都是工作的，它会视情况编译正确代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">	#if !TARGET_INTERFACE_BUILDER</div><div class="line">    // this code will run in the app itself</div><div class="line">#else</div><div class="line">    // this code will execute only in IB</div><div class="line">#endif</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<p><a href="http://honglu.me/2016/02/25/%E5%A6%82%E4%BD%95%E8%AE%A9%E8%87%AA%E5%AE%9A%E4%B9%89UIView%E6%94%AF%E6%8C%81XIB/" target="_blank" rel="external">如何让自定义 UIView 支持 XIB</a></p>
+<p><a href="http://www.jianshu.com/p/a5351d270ac1" target="_blank" rel="external">关于IB_DESIGNABLE / IBInspectable的那些需要注意的事</a></p>
+<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><ol>
+<li>对于UIView的分类实现某些属性的可事实查看和可修改检查器没有用。不过会影响UIView的子类的绘制（例如之前MTLabel根本没有IB_DESIGNABLE但也会事实刷新）。</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;关于-IBInspectable-和-IBDesignable&quot;&gt;&lt;a href=&quot;#关于-IBInspectable-和-IBDesignable&quot; class=&quot;headerlink&quot; title=&quot;关于 IBInspectable 和 IBDesignabl
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>UI界面优化相关</title>
