@@ -333,22 +333,39 @@
       
         
           
-            <h2 id="sqlite有用的链接"><a href="#sqlite有用的链接" class="headerlink" title="sqlite有用的链接"></a>sqlite有用的链接</h2><ul>
+            <hr>
+<h3 id="sqlite有用的链接"><a href="#sqlite有用的链接" class="headerlink" title="sqlite有用的链接"></a>sqlite有用的链接</h3><ul>
 <li><a href="http://www.runoob.com/sqlite/sqlite-data-types.html" target="_blank" rel="external">菜鸟教程</a></li>
+<li><a href="http://www.runoob.com/sql/sql-func-sum.html" target="_blank" rel="external">www.runoob.com</a></li>
 <li><a href="https://sqliteonline.com/" target="_blank" rel="external">sqliteonline在线调试</a></li>
 <li><a href="http://www.cnblogs.com/CSharpLover/p/5193698.html" target="_blank" rel="external">关于Type Affinity类型的理解</a></li>
 </ul>
-<h2 id="值得注意的细节"><a href="#值得注意的细节" class="headerlink" title="值得注意的细节"></a>值得注意的细节</h2><hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">sqlite_master 表格</div><div class="line">	主表中保存数据库表的关键信息，并把它命名为 sqlite_master。如要查看表概要，可按如下操作：</div><div class="line">sqlite&gt;.schema sqlite_master</div><div class="line">这将产生如下结果：</div><div class="line">CREATE TABLE sqlite_master (</div><div class="line">  type text,</div><div class="line">  name text,</div><div class="line">  tbl_name text,</div><div class="line">  rootpage integer,</div><div class="line">  sql text</div><div class="line">);</div></pre></td></tr></table></figure>
 <hr>
-<h2 id="疑问？"><a href="#疑问？" class="headerlink" title="疑问？"></a>疑问？</h2><ol>
+<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><ol>
+<li><a href="http://www.runoob.com/sqlite/sqlite-operators.html" target="_blank" rel="external">SQLite 逻辑运算符</a></li>
+<li></li>
+</ol>
+<hr>
+<h3 id="值得注意的细节"><a href="#值得注意的细节" class="headerlink" title="值得注意的细节"></a>值得注意的细节</h3><ul>
+<li>sqlite_master<br><a href="http://www.runoob.com/sqlite/sqlite-commands.html" target="_blank" rel="external">参考1</a>、<a href="http://www.runoob.com/sqlite/sqlite-select.html" target="_blank" rel="external">参考2</a> </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Schema 信息</div><div class="line">因为所有的点命令只在 SQLite 提示符中可用，所以当您进行带有 SQLite 的编程时，您要使用下面的带有 sqlite_master 表的 SELECT 语句来列出所有在数据库中创建的表：</div><div class="line">sqlite&gt; SELECT tbl_name FROM sqlite_master WHERE type = &apos;table&apos;;</div><div class="line">假设在 testDB.db 中已经存在唯一的 COMPANY 表，则将产生以下结果：</div><div class="line">tbl_name</div><div class="line">----------</div><div class="line">COMPANY</div><div class="line">您可以列出关于 COMPANY 表的完整信息，如下所示：</div><div class="line">sqlite&gt; SELECT sql FROM sqlite_master WHERE type = &apos;table&apos; AND tbl_name = &apos;COMPANY&apos;;</div><div class="line">假设在 testDB.db 中已经存在唯一的 COMPANY 表，则将产生以下结果：</div><div class="line">CREATE TABLE COMPANY(</div><div class="line">   ID INT PRIMARY KEY     NOT NULL,</div><div class="line">   NAME           TEXT    NOT NULL,</div><div class="line">   AGE            INT     NOT NULL,</div><div class="line">   ADDRESS        CHAR(50),</div><div class="line">   SALARY         REAL</div><div class="line">)</div></pre></td></tr></table></figure>
+<ul>
+<li>GLOB 运算符用于把某个值与使用通配符运算符的相似值进行比较。GLOB 与 LIKE 不同之处在于，它是大小写敏感的。LIKE通配符是<code>%</code>、<code>_</code>;GLOB通配符是<code>*</code>、<code>?</code>。</li>
+<li>SELECT CURRENT_TIMESTAMP 可输出当前系统日期和时间值，这些表达式将被用于各种数据操作</li>
+<li>SELECT id, name FROM demo WHERE EXISTS (SELECT name FROM demo WHERE id &gt; 2); 该语句EXISTS后面的所有内容最终都知识一个BOOL值而已，也就是子查询是否可以查到数据的意思。</li>
+</ul>
+<hr>
+<h3 id="疑问？"><a href="#疑问？" class="headerlink" title="疑问？"></a>疑问？</h3><ol>
 <li>什么是主数据库，什么是附加数据库？且测试时语法错误？<ul>
 <li>数据库名称 main 和 temp 被保留用于主数据库和存储临时表及其他临时数据对象的数据库。这两个数据库名称可用于每个数据库连接，且不应该被用于附加</li>
 </ul>
 </li>
 <li>怎么单独打开数据库，操作之前生成的.db文件呢？</li>
-<li></li>
+<li>UNIQUE怎么用？</li>
+<li>关于count（name）配合group by 为0 的情况；另外num、arg_v等函数的使用？</li>
 </ol>
+<hr>
 
           
         
