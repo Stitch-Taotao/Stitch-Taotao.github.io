@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://sangnihao.com/2017/08/20/整理sqlite知识/index.html">
 <meta property="og:site_name" content="桑尼号&amp;好尼桑">
 <meta property="og:description" content="sqlite有用的链接 菜鸟教程 sqliteonline在线调试 关于Type Affinity类型的理解  值得注意的细节 1234567891011sqlite_master 表格	主表中保存数据库表的关键信息，并把它命名为 sqlite_master。如要查看表概要，可按如下操作：sqlite&amp;gt;.schema sqlite_master这将产生如下结果：CREATE TABLE sq">
-<meta property="og:updated_time" content="2017-08-19T20:01:04.000Z">
+<meta property="og:updated_time" content="2017-08-19T20:02:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="整理sqlite知识">
 <meta name="twitter:description" content="sqlite有用的链接 菜鸟教程 sqliteonline在线调试 关于Type Affinity类型的理解  值得注意的细节 1234567891011sqlite_master 表格	主表中保存数据库表的关键信息，并把它命名为 sqlite_master。如要查看表概要，可按如下操作：sqlite&amp;gt;.schema sqlite_master这将产生如下结果：CREATE TABLE sq">
@@ -328,15 +328,15 @@
       
 
       
-        <h3 id="sqlite有用的链接"><a href="#sqlite有用的链接" class="headerlink" title="sqlite有用的链接"></a>sqlite有用的链接</h3><ul>
+        <h2 id="sqlite有用的链接"><a href="#sqlite有用的链接" class="headerlink" title="sqlite有用的链接"></a>sqlite有用的链接</h2><ul>
 <li><a href="http://www.runoob.com/sqlite/sqlite-data-types.html" target="_blank" rel="external">菜鸟教程</a></li>
 <li><a href="https://sqliteonline.com/" target="_blank" rel="external">sqliteonline在线调试</a></li>
 <li><a href="http://www.cnblogs.com/CSharpLover/p/5193698.html" target="_blank" rel="external">关于Type Affinity类型的理解</a></li>
 </ul>
-<h3 id="值得注意的细节"><a href="#值得注意的细节" class="headerlink" title="值得注意的细节"></a>值得注意的细节</h3><hr>
+<h2 id="值得注意的细节"><a href="#值得注意的细节" class="headerlink" title="值得注意的细节"></a>值得注意的细节</h2><hr>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">sqlite_master 表格</div><div class="line">	主表中保存数据库表的关键信息，并把它命名为 sqlite_master。如要查看表概要，可按如下操作：</div><div class="line">sqlite&gt;.schema sqlite_master</div><div class="line">这将产生如下结果：</div><div class="line">CREATE TABLE sqlite_master (</div><div class="line">  type text,</div><div class="line">  name text,</div><div class="line">  tbl_name text,</div><div class="line">  rootpage integer,</div><div class="line">  sql text</div><div class="line">);</div></pre></td></tr></table></figure>
 <hr>
-<h3 id="疑问？"><a href="#疑问？" class="headerlink" title="疑问？"></a>疑问？</h3><ol>
+<h2 id="疑问？"><a href="#疑问？" class="headerlink" title="疑问？"></a>疑问？</h2><ol>
 <li>什么是主数据库，什么是附加数据库？且测试时语法错误？<ul>
 <li>数据库名称 main 和 temp 被保留用于主数据库和存储临时表及其他临时数据对象的数据库。这两个数据库名称可用于每个数据库连接，且不应该被用于附加</li>
 </ul>
@@ -524,7 +524,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#sqlite有用的链接"><span class="nav-number">1.</span> <span class="nav-text">sqlite有用的链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#值得注意的细节"><span class="nav-number">2.</span> <span class="nav-text">值得注意的细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#疑问？"><span class="nav-number">3.</span> <span class="nav-text">疑问？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sqlite有用的链接"><span class="nav-number">1.</span> <span class="nav-text">sqlite有用的链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#值得注意的细节"><span class="nav-number">2.</span> <span class="nav-text">值得注意的细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#疑问？"><span class="nav-number">3.</span> <span class="nav-text">疑问？</span></a></li></ol></div>
             
 
           </div>
